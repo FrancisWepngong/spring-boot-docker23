@@ -1,0 +1,49 @@
+Pipeline{
+agent any
+tool{
+	maven "maven3.8.6"
+	stages{
+	stage('Gitclone'){
+	steps{ 
+	sh "echo cloning the latest application version"
+	git "https://github.com/FrancisWepngong/spring-boot-docker23/new/dev"
+	}
+	}
+	stage ('TestBuild'){
+	steps{
+	sh "echo running unitResting"
+	sh "echo unitTesting Ok. Creating packages"
+	sh "mvn clean package"
+	sh "echo Artifacts created"
+	}
+	}
+	stage('CodeQuality'){
+	steps{
+	sh "echo running codeQuality repart"
+	sh "mvn sonar:sonar"
+	}
+	}
+	stage('UploadingArtifacts'){
+	steps{
+	sh "echo uploading Artifacts into nexus"
+	sh "mvn deploy"
+	}
+	}
+	stage('perdeployment'){
+ steps{
+ sh "docker build -t FrancisWepngong/spring-boot-docker23/new/dev ."
+ sh "docker push FrancisWepngong/spring-boot-docker23/new/dev"
+ }
+ }
+===
+pipeline{
+ agent any
+ stages{
+ stage('deployment'){
+ steps{
+ sh "echo application ready for deployment"
+ sh "sleep 20"
+ sh "echo ready for deployment"
+ sh "docker run --name maven-webapp -d -p 7000:8080 FrancisWepngong/spring-boot-docker23/new/dev"
+ }
+ }
