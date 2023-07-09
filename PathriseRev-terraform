@@ -1,0 +1,24 @@
+main.tf
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "5.7.0"
+    }
+  }
+}
+provider.tf
+provider "aws"{
+   region = "us-east-2"
+  access_key =  "AKIA6AI3KNQ4TF6SUMYW"
+  secret_key = "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"
+}
+resource.tf
+resource "aws_instance" "pathrev1"{
+  ami = "ami-02b8534ff4b424939"
+  instance_type = "t2.micro"
+  key_name =  "db1-key"
+  user_data =  file("${path.module}/db1.sh")
+  count = 2
+  tags = {
+    "Name" = "Count-Demo-${count.index}"
