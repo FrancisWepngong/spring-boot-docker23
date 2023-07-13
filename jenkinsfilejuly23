@@ -49,6 +49,6 @@ pipeline{
  }
 post {
 	always{
-	mail bcc: 'moro.henry@myyahoo.com', body: '''Application deployed to Dev E
-	spring-boot-docker ''', cc: 'ndifrancis@outlook.com', from: '', replyTo: '', subject: 'Deployment to Dev', to: 'ndifrancis@outlook.com'
+	mail bcc: 'moro.henry@myyahoo.com', body: '''Application deployed to Dev Env
+	spring-boot-docker23 ''', cc: 'ndifrancis@outlook.com', from: '', replyTo: '', subject: 'Deployment to Dev', to: 'ndifrancis@outlook.com'
 	}
