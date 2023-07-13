@@ -1,0 +1,31 @@
+pipeline{
+agent terraform
+stages{
+stage(‘1Clone terraformCode’){
+steps{
+sh “git clone https/FrancisWepngong/terraform”
+}
+}
+stage(‘2plan’){
+steps{
+terraform init
+terraform validate
+terraform fmt
+terraform plan
+}
+}
+stage(‘3create’){
+steps{
+terraform apply --auto-approve
+}
+}
+stage(‘4UploadArtifacts’){
+steps{
+sh “echo upload to nexus”
+}
+}
+post{
+success{
+failure{
+}
+}
