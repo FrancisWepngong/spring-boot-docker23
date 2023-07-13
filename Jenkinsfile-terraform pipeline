@@ -25,7 +25,9 @@ sh “echo upload to nexus”
 }
 }
 post{
-success{
-failure{
+success{ mail bcc: 'moro.henry@myyahoo.com', body: '''Artifacts uploaded to nexus
+	spring-boot-docker23 ''',
+failure{mail bcc: 'ndifrancis@outlook.com', body: '''Artifacts failed to upload to nexus
+	spring-boot-docker23 ''',
 }
 }
